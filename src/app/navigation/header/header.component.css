@@ -1,0 +1,8 @@
+.logo-container {
+  width: 100%;
+}
+
+mat-toolbar {
+  height: 96px;
+  background-color: blue;
+}
