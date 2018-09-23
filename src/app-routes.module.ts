@@ -1,8 +1,9 @@
-import {RegisterComponent} from './app/register/register.component';
-import {LoginComponent} from './app/login/login.component';
+import {RegisterComponent} from './app/auth/register/register.component';
+import {LoginComponent} from './app/auth/login/login.component';
 import {QuizComponent} from './app/quiz/quiz.component';
 import {WelcomeComponent} from './app/welcome/welcome.component';
-import {Routes} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
+import {NgModule} from '@angular/core';
 
 export const appRoutes: Routes = [
   {
@@ -26,3 +27,11 @@ export const appRoutes: Routes = [
     component: WelcomeComponent
   },
 ];
+
+@NgModule({
+  imports: [RouterModule.forRoot(appRoutes)],
+  exports: [RouterModule]
+})
+
+export class AppRoutesModule {}
+
