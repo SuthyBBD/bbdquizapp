@@ -1,3 +1,9 @@
-<p>
-  welcome works!
-</p>
+<div class="container">
+  <div class="welcome-header">
+    Welcome
+  </div>
+  <div class="welcome-score" *ngIf="user.uid | async as userId">
+    Your current score is {{userId}}
+  </div>
+    <button mat-raised-button>Start Quiz</button>
+</div>

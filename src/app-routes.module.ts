@@ -4,6 +4,7 @@ import {QuizComponent} from './app/quiz/quiz.component';
 import {WelcomeComponent} from './app/welcome/welcome.component';
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
+import { LoggedInAuthGuard } from './services/loggedInAuthGuard';
 
 export const appRoutes: Routes = [
   {
@@ -16,7 +17,7 @@ export const appRoutes: Routes = [
   },
   {
     path: 'quiz',
-    component: QuizComponent
+    component: QuizComponent, canActivate: [LoggedInAuthGuard]
   },
   {
     path: 'welcome',

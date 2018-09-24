@@ -1,3 +1,40 @@
-<p>
-  login works!
-</p>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v3.1&appId=2155115168083878&autoLogAppEvents=1';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<mat-card class="login-card">
+  <mat-card-header>
+    <mat-card-title>Login</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form class="login-form">
+      <table class="login-table" cellspacing="0">
+        <tr>
+          <td>
+            <mat-form-field class="mat-table-field">
+              <input matInput placeholder="Username" [(ngModel)]="username" name="username" required>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td><mat-form-field class="mat-table-field">
+            <input matInput placeholder="Password" [(ngModel)]="password" type="password" name="password" required>
+          </mat-form-field></td>
+        </tr></table>
+    </form>
+    <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+  </mat-card-content>
+  <mat-card-actions>
+    <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="login_with"
+         data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false">...</div>
+    <button mat-raised-button class="fb" (click)="user.loginFacebook()">Log in with facebook</button>
+    <button mat-raised-button (click)="user.loginGoogle()">Log in with Google</button>
+    <button mat-raised-button (click)="user.loginEmail()">Log in with Email/Password</button>
+  </mat-card-actions>
+  <a routerLink="/register" routerLinkActive="active"><strong>Register here</strong></a>
+</mat-card>

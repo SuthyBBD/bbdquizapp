@@ -7,8 +7,8 @@
 
   <mat-sidenav-content>
     <app-header (SideNavigationToggle)="sidenav.toggle()"></app-header>
-    <app-nav-tabs></app-nav-tabs>
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
 
-  <router-outlet></router-outlet>
 </mat-sidenav-container>
+
