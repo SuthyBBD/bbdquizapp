@@ -8,6 +8,6 @@ app.listen(process.env.PORT || 8080);
 
 //make sure we let angular handle routing instead of server
 app.get('/*', function(req, res) {
-  res.sendFile(path.join(__dirname + '/dist/index/html'));
+  res.sendFile(path.join(__dirname + '/dist/index.html'));
 })
 
