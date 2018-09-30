@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-nav-tabs',
@@ -8,12 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class NavTabsComponent implements OnInit {
   constructor() { }
 
-  quizStarted = false
+  @Input() showQuestion = 1;
+
   ngOnInit() {
   }
-
-  onStartQuiz() {
-    this.quizStarted = true;
-  }
-
 }

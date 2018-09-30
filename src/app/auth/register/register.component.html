@@ -8,6 +8,13 @@
         <tr>
           <td>
             <mat-form-field class="example-full-width">
+              <input matInput placeholder="Full Name" (keydown)="resetNotification()" [(ngModel)]="displayName" name="name" required>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width">
               <input matInput placeholder="Email" (keydown)="resetNotification()" [(ngModel)]="email" name="email" required>
             </mat-form-field>
           </td>
@@ -23,7 +30,6 @@
         <span class="error">{{error}}</span>
         </tr></table>
     </form>
-    <!--<mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>-->
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button (click)="register()" color="primary">Register</button>

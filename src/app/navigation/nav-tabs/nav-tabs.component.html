@@ -4,35 +4,37 @@
   <mat-tab-group>
     <mat-tab>
       <ng-template mat-tab-label>
-        <mat-icon class="white-icon">lock_open</mat-icon>
+        <mat-icon class="white-icon" *ngIf="showQuestion !== 1">lock</mat-icon>
+        <mat-icon class="white-icon" *ngIf="showQuestion === 1">lock_open</mat-icon>
         <h4>Question 1</h4>
       </ng-template>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <span (click)="onStartQuiz()">
-        <mat-icon class="white-icon" *ngIf="!quizStarted">lock</mat-icon>
-        <mat-icon class="white-icon" *ngIf="quizStarted">lock_open</mat-icon>
+        <mat-icon class="white-icon" *ngIf="showQuestion !== 2">lock</mat-icon>
+        <mat-icon class="white-icon" *ngIf="showQuestion === 2">lock_open</mat-icon>
           <h4>Question 2</h4>
-        </span>
       </ng-template>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-       <span (click)="onStartQuiz()">
-        <mat-icon *ngIf="!quizStarted">lock</mat-icon>
-        <mat-icon *ngIf="quizStarted">lock_open</mat-icon>
+        <mat-icon class="white-icon" *ngIf="showQuestion !== 3">lock</mat-icon>
+        <mat-icon class="white-icon" *ngIf="showQuestion === 3">lock_open</mat-icon>
          <h4>Question 3</h4>
-        </span>
       </ng-template>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <span (click)="onStartQuiz()">
-        <mat-icon *ngIf="!quizStarted">lock</mat-icon>
-        <mat-icon *ngIf="quizStarted">lock_open</mat-icon>
-          <h4>Question 4</h4>
-        </span>
+        <mat-icon class="white-icon" *ngIf="showQuestion !== 4">lock</mat-icon>
+        <mat-icon class="white-icon" *ngIf="showQuestion === 4">lock_open</mat-icon>
+         <h4>Question 4</h4>
+      </ng-template>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="white-icon" *ngIf="showQuestion !== 5">lock</mat-icon>
+        <mat-icon class="white-icon" *ngIf="showQuestion === 5">lock_open</mat-icon>
+         <h4>Question 5</h4>
       </ng-template>
     </mat-tab>
   </mat-tab-group>

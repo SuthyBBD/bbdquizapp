@@ -6,6 +6,9 @@
 .logo {
   width: 100px;
 }
+.white-icon {
+  color: white;
+}
 
 mat-toolbar {
   height: 106px;

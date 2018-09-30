@@ -7,7 +7,7 @@ import { switchMap, take, tap } from 'rxjs/operators';
 @Directive({
   selector: '[counter]'
 })
-export class CounterDirective implements OnChanges, OnDestroy {
+export class TimerDirective implements OnChanges, OnDestroy {
 
   private counter$ = new Subject<any>();
   private countSub$: SubscriptionLike;
@@ -17,6 +17,9 @@ export class CounterDirective implements OnChanges, OnDestroy {
   @Output() value = new EventEmitter<number>();
 
   constructor() {
+  }
+
+  startTimer() {
     this.countSub$ = this.counter$.pipe(
       switchMap((options: any) =>
         timer(0, options.interval).pipe(

@@ -12,15 +12,26 @@ export class LoginComponent implements OnInit {
 
   form: FormGroup;
   email: string;
+  displayName: string;
   password: string;
+  error: any;
+  loginResult: string;
 
   constructor(private router: Router, public user: AuthService) { }
 
   ngOnInit() {
   }
 
-  routeToMenuItem(route: string) {
-    this.router.navigate(['/' + route]);
+  loginEmail() {
+    this.user.loginEmail(this.email, this.password);
+  }
+
+  loginFacebook() {
+    this.user.loginFacebook();
+  }
+
+  loginGoogle() {
+    this.user.loginGoogle();
   }
 
 }
