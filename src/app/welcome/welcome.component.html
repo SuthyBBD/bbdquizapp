@@ -1,9 +1,17 @@
-<div class="container">
+<div class="container" fxLayout="column" fxLayoutAlign="center center">
   <div class="welcome-header">
-    Welcome
+    <span *ngIf="user.name">
+    Welcome {{user.name}}
+    </span>
   </div>
-  <div class="welcome-score" *ngIf="user.uid | async as userId">
-    Your current score is {{userId}}
+  <br>
+  <div class="welcome-score">
+    <span *ngIf="user.score">
+    Your current score is {{user.score}}
+    </span><span *ngIf="!user.score">
+    Your current score is 0
+    </span>
   </div>
-    <button mat-raised-button>Start Quiz</button>
+  <br>
+    <button mat-raised-button id="startQuizBtn" routerLink="/quiz" routerLinkActive="active" >Start Quiz</button>
 </div>

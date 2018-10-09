@@ -18,12 +18,18 @@ import {NavBarComponent} from './nav-bar/nav-bar.component';
 import {AppRoutesModule} from '../app-routes.module';
 import {HeaderComponent} from './navigation/header/header.component';
 import {SideNavComponent} from './navigation/side-nav/side-nav.component';
-import {NavTabsComponent} from './navigation/nav-tabs/nav-tabs.component';
+import {QuestionTabsComponent} from './navigation/question-tabs/question-tabs.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {TimerDirective} from './timer.directive';
 import {FormsModule} from '@angular/forms';
 import {LoggedInAuthGuard} from '../services/loggedInAuthGuard';
 import {UserService} from '../services/user.service';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {QuizController} from './api/quiz-controller';
+import {QuizService} from '../services/quiz.service';
+import {HttpClientModule} from '@angular/common/http';
+import {MatDialogModule} from '@angular/material';
+import { QuizResultComponent } from './quiz-result/quiz-result.component';
 
 @NgModule({
   declarations: [
@@ -37,11 +43,12 @@ import {UserService} from '../services/user.service';
     NavBarComponent,
     HeaderComponent,
     SideNavComponent,
-    NavTabsComponent,
-    TimerDirective
+    QuestionTabsComponent,
+    TimerDirective,
+    QuizResultComponent
   ],
   entryComponents: [
-    NavTabsComponent
+    QuestionTabsComponent
   ],
   imports: [
     BrowserModule,
@@ -50,6 +57,7 @@ import {UserService} from '../services/user.service';
     AppRoutesModule,
     FlexLayoutModule,
     FormsModule,
+    FontAwesomeModule,
     AngularFireModule.initializeApp({
       apiKey: 'AIzaSyCB7LzWW3y8gt_ZjpitDOlxB9zwd3dBaGI',
       authDomain: 'bbdquizapp.firebaseapp.com',
@@ -59,9 +67,11 @@ import {UserService} from '../services/user.service';
       messagingSenderId: '392710615943'
     }),
     AngularFireAuthModule,
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    HttpClientModule,
+    MatDialogModule
   ],
-  providers: [LoggedInAuthGuard, UserService],
+  providers: [LoggedInAuthGuard, UserService, QuizService, QuizController],
   bootstrap: [AppComponent]
 })
 export class AppModule {

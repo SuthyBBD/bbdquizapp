@@ -1,7 +1,8 @@
-import {Injectable, NgZone} from '@angular/core';
-import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
-import {map} from 'rxjs/internal/operators';
+import {Injectable} from '@angular/core';
+import {AngularFireDatabase, AngularFireList, AngularFireObject} from 'angularfire2/database';
 import {Router} from '@angular/router';
+import {AngularFireAuth} from 'angularfire2/auth';
+import {User} from '../app/model/user';
 
 @Injectable({
   providedIn: 'root' // makes this a singleton so we have one shared instance throughout the application
@@ -9,24 +10,49 @@ import {Router} from '@angular/router';
 export class UserService {
 
   userList: AngularFireList<any>;
-  user: any;
-  constructor(private db: AngularFireDatabase, private router: Router, private zone: NgZone) {
+  user: User;
+  displayName: string;
+
+  constructor(private db: AngularFireDatabase, private fireAuth: AngularFireAuth, private router: Router) {
   }
 
-  createUser(user) {
+  createUser(user, name?) {
     this.retrieveUserList();
-    this.userList.set(user.uid, {
-      name: user.displayName,
-      email: user.email,
-      completedQuizes: [],
-      score: 0
-    }).then( success => {
-      this.zone.run(() => this.router.navigate(['/welcome'])); // executed outside of zone - > reenter angular zone using run
+    if (name) {
+      this.displayName = name;
+    } else {
+      this.displayName = user.displayName;
+    }
+    this.userList.update(user.uid, { // for lack of a better approach, using update instead of create so user score and quizes are not wiped
+      name: this.displayName,
+      email: user.email
     });
   }
 
+  updateUser(score, completedQuizes) {
+    const userId = this.fireAuth.auth.currentUser.uid;
+    console.log ('User: ' + userId + ', Score: ' + score + ', completedQuiz ' + completedQuizes);
+    this.retrieveUserList();
+    this.userList.update(userId, {
+      score: score,
+      completedQuizes: completedQuizes
+    });
+  }
+
+  retrieveUser(email) {
+     this.retrieveUserList().subscribe(list => {
+       list.forEach(user => {
+         console.log(user);
+         console.log(user.email + ' ?= ' + email);
+         if (user.email === email) {
+           this.user = user;
+         }
+       });
+     });
+  }
+
   retrieveUserList() {
-  this.userList = this.db.list('users');
-  return this.userList.snapshotChanges();
+    this.userList = this.db.list('users');
+    return this.userList.valueChanges();
   }
 }

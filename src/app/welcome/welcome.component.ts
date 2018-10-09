@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {AuthService} from '../../services/auth.service';
+import {UserService} from '../../services/user.service';
+import {AngularFireAuth} from 'angularfire2/auth';
+import {User} from '../model/user';
 
 @Component({
   selector: 'app-welcome',
@@ -9,11 +11,26 @@ import {AuthService} from '../../services/auth.service';
 })
 export class WelcomeComponent implements OnInit {
 
-  userScore: string;
-  constructor(private router: Router, public user: AuthService) {}
+  user: User;
+
+  constructor(private router: Router, public afAuth: AngularFireAuth, public userService: UserService) {
+    this.userService.retrieveUserList().subscribe(list => {
+      list.forEach(user => {
+        console.log('score: ' + user.score);
+        console.log(user.email + ' ?= ' + this.afAuth.auth.currentUser.email);
+        if (user.email === this.afAuth.auth.currentUser.email) {
+          this.setUser(user);
+          return true;
+        }
+      });
+    });
+  }
 
   ngOnInit() {
-    this.userScore = this.user.score;
+  }
+
+  setUser(user) {
+    this.user = user;
   }
 
 }

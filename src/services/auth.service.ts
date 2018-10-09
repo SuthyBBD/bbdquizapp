@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, NgZone} from '@angular/core';
 import {Observable, of as observableOf} from 'rxjs';
 import {AngularFireAuth} from 'angularfire2/auth';
 import {map, switchMap} from 'rxjs/internal/operators';
@@ -14,7 +14,7 @@ import {User} from '../app/model/user';
 export class AuthService {
 
   error: string;
-  score: string;
+  currentUser: any;
 
   uid = this.fireAuth.authState.pipe(
     map(authState => {
@@ -25,6 +25,7 @@ export class AuthService {
         }
       }
     ));
+
 
   isUser: Observable<boolean> = this.uid.pipe(
     switchMap(uid => {
@@ -38,15 +39,18 @@ export class AuthService {
 
   constructor(private fireAuth: AngularFireAuth, private db: AngularFireDatabase,
               private router: Router,
-              private userService: UserService) {
+              private userService: UserService,
+              private ngZone: NgZone) {
   }
 
   loginFacebook() {
     this.fireAuth.auth.signInWithPopup(new auth.FacebookAuthProvider()).then(
       (success) => {
-        if (this.fireAuth.auth.currentUser) { // todo check if user exists
-          this.userService.createUser(this.fireAuth.auth.currentUser); // userService is a singleton
+        if (this.fireAuth.auth.currentUser) {
+          this.currentUser = this.fireAuth.auth.currentUser;
+          this.userService.createUser(this.currentUser);
         }
+        this.ngZone.run( () => this.router.navigate(['/welcome']));
       }).catch(
       (err) => {
         console.log(err);
@@ -58,8 +62,10 @@ export class AuthService {
     this.fireAuth.auth.signInWithPopup(new auth.GoogleAuthProvider()).then(
       (success) => {
         if (this.fireAuth.auth.currentUser) { // todo check if user exists
-          this.userService.createUser(this.fireAuth.auth.currentUser); // userService is a singleton
+          this.currentUser = this.fireAuth.auth.currentUser;
+          this.userService.createUser(this.currentUser); // userService is a singleton
         }
+        this.ngZone.run( () => this.router.navigate(['/welcome']));
       }).catch(
       (err) => {
         this.error = err;
@@ -70,9 +76,13 @@ export class AuthService {
   loginEmail(email, password) {
     this.fireAuth.auth.signInWithEmailAndPassword(email, password).then(
       (success) => {
-        this.router.navigate(['/welcome']);
+        if (this.fireAuth.auth.currentUser) {
+          this.currentUser = this.fireAuth.auth.currentUser;
+        }
+        this.ngZone.run( () => this.router.navigate(['/welcome']));
       }).catch(
       (err) => {
+        this.error = err.message;
         return err;
       }
     );
@@ -80,25 +90,20 @@ export class AuthService {
   }
 
   register(email, password, name) {
-    if (!this.userExists(email)) {
       this.fireAuth.auth.createUserWithEmailAndPassword(email, password)
         .then(
           (userCredential) => {
             if (userCredential.user) {
-              userCredential.user.displayName = name;
-              this.userService.createUser(userCredential.user);
-              this.router.navigate(['/login']);
+              this.userService.createUser(userCredential.user, name);
+              this.ngZone.run(() => this.router.navigate(['/login']));
             }
           })
         .catch(
           err => {
-            this.error = err;
+            this.error = err.message;
             console.log(err);
             return err;
           });
-    } else {
-      return false;
-    }
   }
 
   userExists(email) {
@@ -107,7 +112,7 @@ export class AuthService {
         snapshot.forEach(childSnapshot => {
           childSnapshot.forEach(childOfChildSnapshot => {
             if (email === childOfChildSnapshot.val()) {
-              //....
+              // todo
             }
           });
           return false;

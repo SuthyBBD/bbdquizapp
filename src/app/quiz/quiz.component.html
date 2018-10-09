@@ -1,16 +1,22 @@
 <div #quizComponent></div>
-<mat-card class="quiz-card" fxLayout="column" fxLayoutAlign="center center">
+<div fxLayout="column" fxLayoutAlign="center center">
+  <br><br>
+  <div *ngIf="!quizStarted">
+  <span> Once you select "Begin" you will have 10 seconds to answer each of the 5 questions</span>
+  <button mat-raised-button color="dark-blue" (click)="startQuiz()">Begin</button>
+  </div>
+</div>
+<mat-card *ngIf="quizStarted" class="quiz-card" fxLayout="column" fxLayoutAlign="center center">
   <mat-card-header>
     <div mat-card-avatar class="quiz-header"></div>
     <mat-card-title>Question {{questionCounter}}</mat-card-title>
   </mat-card-header>
 
   <mat-card-content>
-
   <span [hidden]="showQuestion !== 1" #question1>
-    <strong>{{q1.question}}</strong>
+    <strong>{{quiz.questions[0].question}}</strong>
     <mat-radio-group [disabled]="submitted"  [(ngModel)]="userSelection">
-      <div *ngFor="let option1 of q1.options">
+      <div *ngFor="let option1 of quiz.questions[0].options">
       <mat-radio-button value="{{option1}}">
       {{option1}}
       </mat-radio-button>
@@ -19,9 +25,9 @@
   </span>
 
   <span [hidden]="showQuestion !== 2" #question2>
-    <strong>{{q2.question}}</strong>
+    <strong>{{quiz.questions[1].question}}</strong>
     <mat-radio-group [disabled]="submitted"  [(ngModel)]="userSelection">
-      <div *ngFor="let option2 of q2.options">
+      <div *ngFor="let option2 of quiz.questions[1].options">
       <mat-radio-button value="{{option2}}">
       {{option2}}
       </mat-radio-button>
@@ -30,9 +36,9 @@
   </span>
 
   <span [hidden]="showQuestion !== 3" #question3>
-    <strong>{{q3.question}}</strong>
+    <strong>{{quiz.questions[2].question}}</strong>
     <mat-radio-group [disabled]="submitted"  [(ngModel)]="userSelection">
-      <div *ngFor="let option3 of q3.options">
+      <div *ngFor="let option3 of quiz.questions[2].options">
       <mat-radio-button value="{{option3}}">
       {{option3}}
       </mat-radio-button>
@@ -41,9 +47,9 @@
   </span>
 
   <span [hidden]="showQuestion !== 4" #question4>
-    <strong>{{q4.question}}</strong>
+    <strong>{{quiz.questions[3].question}}</strong>
     <mat-radio-group [disabled]="submitted" [(ngModel)]="userSelection">
-      <div *ngFor="let option4 of q4.options">
+      <div *ngFor="let option4 of quiz.questions[3].options">
       <mat-radio-button value="{{option4}}">
       {{option4}}
       </mat-radio-button>
@@ -52,9 +58,9 @@
   </span>
 
   <span [hidden]="showQuestion !== 5" #question5>
-    {{q5.question}}
+    {{quiz.questions[4].question}}
     <mat-radio-group [disabled]="submitted" [(ngModel)]="userSelection">
-      <div *ngFor="let option5 of q5.options">
+      <div *ngFor="let option5 of quiz.questions[4].options">
       <mat-radio-button value="{{option5}}">
       {{option5}}
       </mat-radio-button>
@@ -62,12 +68,8 @@
     </mat-radio-group>
   </span>
   </mat-card-content>
-  <!--<mat-card-actions>-->
-    <!--<button [disabled]="questionCounter===1" mat-raised-button class="prevBtn" (click)="prevQuestion()">Previous</button>-->
-    <!--<button [disabled]="questionCounter===5" mat-raised-button class="nextBtn" (click)="nextQuestion()">Next</button>-->
-  <!--</mat-card-actions>-->
-  <button *ngIf="!quizFinished" mat-raised-button class="submitBtn" (click)="submit(showQuestion)">Submit</button>
-  <button *ngIf="quizFinished" mat-raised-button class="submitBtn" (click)="getQuiz()">New Quiz</button>
-  <span #timer>Time Remaining:</span>
+  <button [disabled]="submitted" *ngIf="!quizFinished" mat-raised-button class="submitBtn" (click)="submit(showQuestion)">Submit</button>
+  <button *ngIf="quizFinished" mat-raised-button class="submitBtn" routerLink="/quiz" routerLinkActive="active">New Quiz</button>
+  <span *ngIf="!submitted" #timer>Time Remaining: {{counter$[showQuestion] | async}}</span>
 </mat-card>
 

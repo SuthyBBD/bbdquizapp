@@ -1,4 +1,19 @@
 .loginBtn {
   width: 200px;
+  color: white;
+}
 
+#emailBtn {
+  background-color: lightskyblue;
+}
+
+#facebookBtn {
+  background-color: #3B5998;
+}
+#googleBtn {
+  background-color: #dd4b39;
+}
+
+#registerBtn {
+  background-color: darkblue;
 }
