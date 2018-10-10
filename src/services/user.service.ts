@@ -31,7 +31,6 @@ export class UserService {
 
   updateUser(score, completedQuizes) {
     const userId = this.fireAuth.auth.currentUser.uid;
-    console.log ('User: ' + userId + ', Score: ' + score + ', completedQuiz ' + completedQuizes);
     this.retrieveUserList();
     this.userList.update(userId, {
       score: score,
@@ -42,8 +41,6 @@ export class UserService {
   retrieveUser(email) {
      this.retrieveUserList().subscribe(list => {
        list.forEach(user => {
-         console.log(user);
-         console.log(user.email + ' ?= ' + email);
          if (user.email === email) {
            this.user = user;
          }

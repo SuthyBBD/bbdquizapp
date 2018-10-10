@@ -4,7 +4,8 @@ import {QuizComponent} from './app/quiz/quiz.component';
 import {WelcomeComponent} from './app/welcome/welcome.component';
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
-import { LoggedInAuthGuard } from './services/loggedInAuthGuard';
+import {LoggedInAuthGuard} from './services/loggedInAuthGuard';
+import {QuizResultComponent} from './app/quiz-result/quiz-result.component';
 
 export const appRoutes: Routes = [
   {
@@ -17,16 +18,22 @@ export const appRoutes: Routes = [
   },
   {
     path: 'quiz',
-    component: QuizComponent, canActivate: [LoggedInAuthGuard]
+    component: QuizComponent,
+    canActivate: [LoggedInAuthGuard]
   },
   {
     path: 'welcome',
-    component: WelcomeComponent
+    component: WelcomeComponent,
+    canActivate: [LoggedInAuthGuard]
+  },
+  {
+    path: 'quiz-result',
+    component: QuizResultComponent
   },
   {
     path: '',
-    component: WelcomeComponent
-  },
+    component: LoginComponent
+  }
 ];
 
 @NgModule({
@@ -34,5 +41,6 @@ export const appRoutes: Routes = [
   exports: [RouterModule]
 })
 
-export class AppRoutesModule {}
+export class AppRoutesModule {
+}
 

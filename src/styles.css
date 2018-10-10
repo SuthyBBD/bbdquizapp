@@ -13,3 +13,11 @@ body {
 .error {
   color: red;
 }
+
+.snackbar {
+  background-color: lightskyblue !important;
+}
+
+.mat-spinner-color circle{
+  stroke: #0D47A1 !important;
+}

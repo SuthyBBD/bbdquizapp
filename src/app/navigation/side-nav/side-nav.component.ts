@@ -1,5 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {AuthService} from '../../../services/auth.service';
+import {AngularFireAuth} from 'angularfire2/auth';
+
 
 @Component({
   selector: 'app-side-nav',
@@ -9,13 +11,27 @@ import {AuthService} from '../../../services/auth.service';
 export class SideNavComponent implements OnInit {
 
   @Output() hideSideNavigation = new EventEmitter();
-  constructor(public user: AuthService) { }
 
-  ngOnInit() {
+  user;
+  constructor(public userService: AuthService, public afAuth: AngularFireAuth) {
   }
 
+  ngOnInit() {
+    this.checkLoggedIn();
+  }
+
+  checkLoggedIn() {
+    this.afAuth.authState.subscribe( authState => {
+      if (authState && authState.uid) {
+        this.user = authState.uid;
+      } else {
+        this.user = false;
+      }
+    });
+  }
   logout() {
-    this.user.logout();
+    this.userService.logout();
+    this.checkLoggedIn();
   }
   onToggleHide() {
     this.hideSideNavigation.emit();

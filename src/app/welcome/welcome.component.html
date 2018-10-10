@@ -1,16 +1,17 @@
 <div class="container" fxLayout="column" fxLayoutAlign="center center">
   <div class="welcome-header">
-    <span *ngIf="user.name">
-    Welcome {{user.name}}
-    </span>
+    <h1>
+    Welcome to the BBD Quiz App, {{user.name}}
+    </h1>
   </div>
   <br>
   <div class="welcome-score">
-    <span *ngIf="user.score">
+    <h2 *ngIf="user.score">
     Your current score is {{user.score}}
-    </span><span *ngIf="!user.score">
+    </h2>
+    <h2 *ngIf="!user.score">
     Your current score is 0
-    </span>
+    </h2>
   </div>
   <br>
     <button mat-raised-button id="startQuizBtn" routerLink="/quiz" routerLinkActive="active" >Start Quiz</button>

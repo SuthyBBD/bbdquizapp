@@ -1,17 +1,32 @@
-<div #quizComponent></div>
-<div fxLayout="column" fxLayoutAlign="center center">
-  <br><br>
-  <div *ngIf="!quizStarted">
-  <span> Once you select "Begin" you will have 10 seconds to answer each of the 5 questions</span>
-  <button mat-raised-button color="dark-blue" (click)="startQuiz()">Begin</button>
-  </div>
+<div [hidden]="!quizStarted">
+  <div #quizComponent></div>
 </div>
-<mat-card *ngIf="quizStarted" class="quiz-card" fxLayout="column" fxLayoutAlign="center center">
+
+<div *ngIf="allQuizesComplete" fxLayout="column" fxLayoutAlign="center center">
+  <br><br>
+  <h2>Welcome, {{user.name}}</h2>
+  <h3>You have finished all available quizes</h3><br>
+  <h3>If you would like to reset your score and start over, click Resest below</h3><br>
+  <button mat-raised-button class="submitBtn" (click)="resetUser()">Reset</button>
+</div>
+<div [hidden]="allQuizesComplete">
+<div *ngIf="!quizStarted && !quizFinished" fxLayout="column" fxLayoutAlign="center center">
+  <br><br>
+  <h2>Welcome, {{user.name}}</h2>
+  <h3> Once you select "Begin" you will have 10 seconds to answer each of the 5 questions</h3><br>
+  <button mat-raised-button class="submitBtn" (click)="startQuiz()">Begin</button>
+</div>
+
+<mat-card *ngIf="quizStarted && !quizFinished" class="quiz-card" fxLayout="column" fxLayoutAlign="center center">
   <mat-card-header>
     <div mat-card-avatar class="quiz-header"></div>
-    <mat-card-title>Question {{questionCounter}}</mat-card-title>
+    <h2>Question {{questionCounter}}</h2>
   </mat-card-header>
 
+  <mat-spinner *ngIf="submitted" class="mat-spinner-color"></mat-spinner>
+  <br>
+
+  <div [hidden]="submitted">
   <mat-card-content>
   <span [hidden]="showQuestion !== 1" #question1>
     <strong>{{quiz.questions[0].question}}</strong>
@@ -68,8 +83,8 @@
     </mat-radio-group>
   </span>
   </mat-card-content>
-  <button [disabled]="submitted" *ngIf="!quizFinished" mat-raised-button class="submitBtn" (click)="submit(showQuestion)">Submit</button>
-  <button *ngIf="quizFinished" mat-raised-button class="submitBtn" routerLink="/quiz" routerLinkActive="active">New Quiz</button>
+  </div>
+  <button *ngIf="!submitted && !quizFinished" mat-raised-button class="submitBtn" (click)="submit(showQuestion)">Submit</button>
   <span *ngIf="!submitted" #timer>Time Remaining: {{counter$[showQuestion] | async}}</span>
 </mat-card>
-
+</div>

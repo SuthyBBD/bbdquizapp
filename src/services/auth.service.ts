@@ -53,7 +53,7 @@ export class AuthService {
         this.ngZone.run( () => this.router.navigate(['/welcome']));
       }).catch(
       (err) => {
-        console.log(err);
+        this.error = err;
       }
     );
   }
@@ -86,7 +86,6 @@ export class AuthService {
         return err;
       }
     );
-    return null;
   }
 
   register(email, password, name) {
@@ -100,9 +99,7 @@ export class AuthService {
           })
         .catch(
           err => {
-            this.error = err.message;
-            console.log(err);
-            return err;
+            this.error = err;
           });
   }
 
@@ -122,5 +119,6 @@ export class AuthService {
 
   logout() {
     this.fireAuth.auth.signOut();
+    this.ngZone.run(() => this.router.navigate(['/login']));
   }
 }

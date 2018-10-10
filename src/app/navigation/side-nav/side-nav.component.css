@@ -1,3 +1,13 @@
 .sidenav {
   padding-left: 8px;
+  background-color: darkblue;
+  height: 100%;
+}
+
+.sidenav-span {
+  color: white;
+}
+
+.white-icon {
+  color: white;
 }

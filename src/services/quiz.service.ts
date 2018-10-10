@@ -1,22 +1,24 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {Quiz} from '../app/model/quiz';
+import {BehaviorSubject} from 'rxjs';
 import {QuizController} from '../app/api/quiz-controller';
-import {User} from '../app/model/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuizService {
 
+  private scoreSource = new BehaviorSubject('0');
+  currentScore = this.scoreSource.asObservable();
+
   constructor(private quizController: QuizController) {
   }
 
-  quizObs$: Observable<Quiz[]>;
-  quiz: any;
-
   getQuiz() {
-   return this.quizController.retrieveQuizListUsingGet();
+    return this.quizController.retrieveQuizListUsingGet();
+  }
+
+  setLastScore(score: string) {
+    this.scoreSource.next(score);
   }
 
 }

@@ -1,3 +1,17 @@
-<p>
-  quiz-result works!
-</p>
+<div class="container" fxLayout="column" fxLayoutAlign="center center">
+  <div class="quiz-result-header">
+    <h1 *ngIf="null !== user.name">
+    Congratulations {{user.name}}, you completed the quiz
+    </h1>
+  </div>
+  <div>
+    <h2>
+    You achieved a score of {{userScore}}
+    </h2>
+    <h2>
+    Your total score is {{user.score}}
+    </h2>
+  </div>
+  <br>
+  <button mat-raised-button id="takeQuizBtn" routerLink="/quiz" routerLinkActive="active">Take another Quiz</button>
+</div>

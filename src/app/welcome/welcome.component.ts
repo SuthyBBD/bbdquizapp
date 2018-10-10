@@ -11,16 +11,13 @@ import {User} from '../model/user';
 })
 export class WelcomeComponent implements OnInit {
 
-  user: User;
+  user = new User;
 
   constructor(private router: Router, public afAuth: AngularFireAuth, public userService: UserService) {
     this.userService.retrieveUserList().subscribe(list => {
       list.forEach(user => {
-        console.log('score: ' + user.score);
-        console.log(user.email + ' ?= ' + this.afAuth.auth.currentUser.email);
         if (user.email === this.afAuth.auth.currentUser.email) {
           this.setUser(user);
-          return true;
         }
       });
     });

@@ -12,15 +12,12 @@ import {WelcomeComponent} from './welcome/welcome.component';
 import {LoginComponent} from './auth/login/login.component';
 import {QuizComponent} from './quiz/quiz.component';
 import {RegisterComponent} from './auth/register/register.component';
-import {UserComponent} from './user/user.component';
-import {UserListComponent} from './user-list/user-list.component';
 import {NavBarComponent} from './nav-bar/nav-bar.component';
 import {AppRoutesModule} from '../app-routes.module';
 import {HeaderComponent} from './navigation/header/header.component';
 import {SideNavComponent} from './navigation/side-nav/side-nav.component';
 import {QuestionTabsComponent} from './navigation/question-tabs/question-tabs.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {TimerDirective} from './timer.directive';
 import {FormsModule} from '@angular/forms';
 import {LoggedInAuthGuard} from '../services/loggedInAuthGuard';
 import {UserService} from '../services/user.service';
@@ -38,13 +35,10 @@ import { QuizResultComponent } from './quiz-result/quiz-result.component';
     LoginComponent,
     QuizComponent,
     RegisterComponent,
-    UserComponent,
-    UserListComponent,
     NavBarComponent,
     HeaderComponent,
     SideNavComponent,
     QuestionTabsComponent,
-    TimerDirective,
     QuizResultComponent
   ],
   entryComponents: [
