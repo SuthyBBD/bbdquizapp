@@ -13,6 +13,6 @@ export class QuizController {
 
   retrieveQuizListUsingGet(): Observable<Quiz[]> {
     return this.httpClient
-      .get<Quiz[]>('http://localhost:3000/get-quiz');
+      .get<Quiz[]>('/get-quiz');
   }
 }
